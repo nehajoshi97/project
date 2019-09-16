@@ -1,0 +1,989 @@
+
+
+mysql> CREATE DATABASE store;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| app1               |
+| app2               |
+| bookapi            |
+| captain            |
+| college            |
+| employee           |
+| etour              |
+| exam               |
+| function           |
+| gulnaj             |
+| hotel1             |
+| hotel2             |
+| hotels             |
+| info               |
+| khan               |
+| mayur              |
+| mydata             |
+| mydb               |
+| myemp              |
+| myexam             |
+| myhotels           |
+| myphpdb            |
+| mysql              |
+| numbers            |
+| patil              |
+| prj                |
+| project            |
+| sales              |
+| store              |
+| stud_data          |
+| test               |
+| vehicledb          |
+| vishal             |
+| vita               |
++--------------------+
+35 rows in set (0.02 sec)
+
+mysql> USE store;
+Database changed
+mysql> CREATE TABLE Book
+    -> (
+    -> BookID int AUTO_INCREMENT
+    -> primary key,
+    -> BookName varchar(50) not null,
+    -> Price decimal(6,2)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> ALTER TABLE Book
+    -> ADD COLUMN Author varchar(40)
+    -> not null;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> DESCRIBE Book;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| BookID   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| BookName | varchar(50)  | NO   |     | NULL    |                |
+| Price    | decimal(6,2) | YES  |     | NULL    |                |
+| Author   | varchar(40)  | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql>
+mysql> ALTER TABLE Book
+    -> MODIFY COLUMN Author char(30)
+    -> not null;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE Book
+    -> DROP COLUMN Author;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO Book
+    -> (BookName,Price)VALUES
+    -> ('HTML5 Step by Step',NULL),
+    -> ('Java Unleashed',-560);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> DELETE FROM Book
+    -> WHERE BookID=4;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT *
+    ->  FROM Book;
++--------+--------------------+---------+
+| BookID | BookName           | Price   |
++--------+--------------------+---------+
+|      1 | HTML5 Step by Step |    NULL |
+|      2 | Java Unleashed     | -560.00 |
++--------+--------------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Book
+    -> (BookName,Price)
+    -> VALUES
+    -> ('MYSQL for dummies',350),
+    -> ('MYSQL for developers',560);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *
+    ->  FROM Book;
++--------+----------------------+---------+
+| BookID | BookName             | Price   |
++--------+----------------------+---------+
+|      1 | HTML5 Step by Step   |    NULL |
+|      2 | Java Unleashed       | -560.00 |
+|      3 | MYSQL for dummies    |  350.00 |
+|      4 | MYSQL for developers |  560.00 |
++--------+----------------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Book
+    -> (BookName,Price)VALUES
+    -> ('HTML5 Step by Step',5555557);
+ERROR 1264 (22003): Out of range value for column 'Price' at row 1
+
+
+
+mysql> CREATE TABLE Member
+    -> (
+    -> Memb_ID int AUTO_INCREMENT Primary Key,
+    -> FName varchar(20) not null,
+    -> MName varchar(10),
+    -> LName varchar(20) not null,
+    -> Mem_DOJ Date,
+    -> Email varchar(30),
+    -> Phone char(10),
+    -> Memb_type ENUM
+    -> ('Regular','Silver','Gold','Premium')
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> ALTER TABLE Member
+    -> ADD CONSTRAINT Member_Email_UQ
+    -> UNIQUE(Email);
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Member;
++-----------+-------------------------------------------+------+-----+---------+----------------+
+| Field     | Type                                      | Null | Key | Default | Extra          |
++-----------+-------------------------------------------+------+-----+---------+----------------+
+| Memb_ID   | int(11)                                   | NO   | PRI | NULL    | auto_increment |
+| FName     | varchar(20)                               | NO   |     | NULL    |                |
+| MName     | varchar(10)                               | YES  |     | NULL    |                |
+| LName     | varchar(20)                               | NO   |     | NULL    |                |
+| Mem_DOJ   | date                                      | YES  |     | NULL    |                |
+| Email     | varchar(30)                               | YES  | UNI | NULL    |                |
+| Phone     | char(10)                                  | YES  |     | NULL    |                |
+| Memb_type | enum('Regular','Silver','Gold','Premium') | YES  |     | NULL    |                |
++-----------+-------------------------------------------+------+-----+---------+----------------+
+8 rows in set (0.02 sec)
+
+mysql> INSERT INTO Member(FName,MName,LName,Mem_DOJ,Email,Phone,Memb_type)
+    -> VALUES('Neha','Shashikant','Joshi','NOW()','nehusjoshi97@gmail.com','7276465209','Silver'),
+    -> ('Payal','Pandit','Mane','2019-08-27','payalmane@gmail.com',NULL,'Gold'),
+    -> ('Apeksha',NULL,'Magare','NOW()',NULL,'5345667897','Gold'),
+    -> ('Yuga','SUHAS','shewale',NULL,'abc@gmail.com','7345667897','Gold')
+    -> ;
+
+
+mysql> INSERT INTO Member(FName,MName,LName,Mem_DOJ,Email,Phone,Memb_type)
+    -> VALUES('Neha','Shashikant','Joshi',NOW(),'nehusjoshi97@gmail.com','7276465209','Silver')
+    -> ;
+Query OK, 1 row affected, 1 warning (0.03 sec)
+
+mysql> INSERT INTO Member(FName,MName,LName,Mem_DOJ,Email,Phone,Memb_type)
+    -> VALUES('Payal','Pandit','Mane','2019-08-27','payalmane@gmail.com',NULL,'Gold'),
+    -> ('Apeksha',NULL,'Magare',NOW(),NULL,'5345667897','Gold'),
+    -> ('Yuga','SUHAS','shewale',NULL,'abc@gmail.com','7345667897','Gold');
+Query OK, 3 rows affected, 1 warning (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 1
+
+mysql> SELECT *
+    ->  FROM Member;
++---------+---------+------------+---------+------------+------------------------+------------+-----------+
+| Memb_ID | FName   | MName      | LName   | Mem_DOJ    | Email                  | Phone      | Memb_type |
++---------+---------+------------+---------+------------+------------------------+------------+-----------+
+|       1 | Neha    | Shashikant | Joshi   | 2019-08-27 | nehusjoshi97@gmail.com | 7276465209 | Silver    |
+|       2 | Payal   | Pandit     | Mane    | 2019-08-27 | payalmane@gmail.com    | NULL       | Gold      |
+|       3 | Apeksha | NULL       | Magare  | 2019-08-27 | NULL                   | 5345667897 | Gold      |
+|       4 | Yuga    | SUHAS      | shewale | NULL       | abc@gmail.com          | 7345667897 | Gold      |
++---------+---------+------------+---------+------------+------------------------+------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE Member;
++-----------+-------------------------------------------+------+-----+---------+----------------+
+| Field     | Type                                      | Null | Key | Default | Extra          |
++-----------+-------------------------------------------+------+-----+---------+----------------+
+| Memb_ID   | int(11)                                   | NO   | PRI | NULL    | auto_increment |
+| FName     | varchar(20)                               | NO   |     | NULL    |                |
+| MName     | varchar(10)                               | YES  |     | NULL    |                |
+| LName     | varchar(20)                               | NO   |     | NULL    |                |
+| Mem_DOJ   | date                                      | YES  |     | NULL    |                |
+| Email     | varchar(30)                               | YES  | UNI | NULL    |                |
+| Phone     | char(10)                                  | YES  |     | NULL    |                |
+| Memb_type | enum('Regular','Silver','Gold','Premium') | YES  |     | NULL    |                |
++-----------+-------------------------------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE Member
+    -> SET Email='abcd@gmail.com'
+    -> WHERE Memb_ID=3;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *
+    ->  FROM Member;
++---------+---------+------------+---------+------------+------------------------+------------+-----------+
+| Memb_ID | FName   | MName      | LName   | Mem_DOJ    | Email                  | Phone      | Memb_type |
++---------+---------+------------+---------+------------+------------------------+------------+-----------+
+|       1 | Neha    | Shashikant | Joshi   | 2019-08-27 | nehusjoshi97@gmail.com | 7276465209 | Silver    |
+|       2 | Payal   | Pandit     | Mane    | 2019-08-27 | payalmane@gmail.com    | NULL       | Gold      |
+|       3 | Apeksha | NULL       | Magare  | 2019-08-27 | abcd@gmail.com         | 5345667897 | Gold      |
+|       4 | Yuga    | SUHAS      | shewale | NULL       | abc@gmail.com          | 7345667897 | Gold      |
++---------+---------+------------+---------+------------+------------------------+------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE BookTran
+    -> (Tran_ID int AUTO_INCREMENT Primary Key,
+    -> Trndate datetime,
+    -> BookID int REFERENCES Book(BookID),
+    -> Memb_ID int REFERENCES Member(Memb_ID)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> DESCRIBE Member;
++-----------+-------------------------------------------+------+-----+---------+----------------+
+| Field     | Type                                      | Null | Key | Default | Extra          |
++-----------+-------------------------------------------+------+-----+---------+----------------+
+| Memb_ID   | int(11)                                   | NO   | PRI | NULL    | auto_increment |
+| FName     | varchar(20)                               | NO   |     | NULL    |                |
+| MName     | varchar(10)                               | YES  |     | NULL    |                |
+| LName     | varchar(20)                               | NO   |     | NULL    |                |
+| Mem_DOJ   | date                                      | YES  |     | NULL    |                |
+| Email     | varchar(30)                               | YES  | UNI | NULL    |                |
+| Phone     | char(10)                                  | YES  |     | NULL    |                |
+| Memb_type | enum('Regular','Silver','Gold','Premium') | YES  |     | NULL    |                |
++-----------+-------------------------------------------+------+-----+---------+----------------+
+8 rows in set (0.01 sec)
+
+mysql> DESCRIBE BookTran;
++---------+----------+------+-----+---------+----------------+
+| Field   | Type     | Null | Key | Default | Extra          |
++---------+----------+------+-----+---------+----------------+
+| Tran_ID | int(11)  | NO   | PRI | NULL    | auto_increment |
+| Trndate | datetime | YES  |     | NULL    |                |
+| BookID  | int(11)  | YES  |     | NULL    |                |
+| Memb_ID | int(11)  | YES  |     | NULL    |                |
++---------+----------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql>
+
+4 rows in set (0.00 sec)
+
+mysql> SELECT BookName
+    ->   FROM Book
+    ->   WHERE BookID = 3;
++-------------------+
+| BookName          |
++-------------------+
+| MYSQL for dummies |
++-------------------+
+1 row in set (0.02 sec)
+
+mysql> SELECT BookName
+    ->   FROM Book
+    ->   WHERE BookID = 4;
++----------------------+
+| BookName             |
++----------------------+
+| MYSQL for developers |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT BookID AS ID,
+    ->        BookName
+    ->   FROM Book
+    ->   WHERE BookID > 3;
++----+----------------------+
+| ID | BookName             |
++----+----------------------+
+|  4 | MYSQL for developers |
++----+----------------------+
+1 row in set (0.04 sec)
+
+mysql> SELECT BookID AS ID,
+    ->        BookName
+    ->   FROM Book
+    ->   WHERE BookID < 3;
++----+--------------------+
+| ID | BookName           |
++----+--------------------+
+|  1 | HTML5 Step by Step |
+|  2 | Java Unleashed     |
++----+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT BookID AS ID,
+    ->        BookName
+    ->   FROM Book
+    ->   WHERE BookID != 3;
++----+----------------------+
+| ID | BookName             |
++----+----------------------+
+|  1 | HTML5 Step by Step   |
+|  2 | Java Unleashed       |
+|  4 | MYSQL for developers |
++----+----------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT BookID AS ID,
+    ->        BookName
+    ->   FROM Book
+    ->   WHERE BookID <> 3;
++----+----------------------+
+| ID | BookName             |
++----+----------------------+
+|  1 | HTML5 Step by Step   |
+|  2 | Java Unleashed       |
+|  4 | MYSQL for developers |
++----+----------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT BookID AS ID,
+    ->        BookName
+    ->   FROM Book
+    ->   WHERE ID <> 3;
+ERROR 1054 (42S22): Unknown column 'ID' in 'where clause'
+
+mysql> SELECT BookID AS ID,
+    ->        BookName
+    ->   FROM Book
+    ->   WHERE BookID <> 3
+    ->   ORDER BY ID;
++----+----------------------+
+| ID | BookName             |
++----+----------------------+
+|  1 | HTML5 Step by Step   |
+|  2 | Java Unleashed       |
+|  4 | MYSQL for developers |
++----+----------------------+
+3 rows in set (0.00 sec)
+
+
+mysql> SELECT BookID AS ID,
+    ->        BookName
+    ->   FROM Book
+    ->   WHERE BookID <> 3
+    ->   ORDER BY 2;
++----+----------------------+
+| ID | BookName             |
++----+----------------------+
+|  1 | HTML5 Step by Step   |
+|  2 | Java Unleashed       |
+|  4 | MYSQL for developers |
++----+----------------------+
+3 rows in set (0.02 sec)
+
+mysql>
+mysql> SELECT BookID, BookName,
+    ->        Price,
+    ->        Price *.10 AS Tax
+    ->   FROM Book
+    ->   WHERE Price *.10 > 12;
++--------+----------------------+--------+---------+
+| BookID | BookName             | Price  | Tax     |
++--------+----------------------+--------+---------+
+|      3 | MYSQL for dummies    | 350.00 | 35.0000 |
+|      4 | MYSQL for developers | 560.00 | 56.0000 |
++--------+----------------------+--------+---------+
+2 rows in set (0.01 sec)
+
+
+
+
+mysql> SELECT BookID, BookName,
+    ->        Price
+    ->   FROM Book
+    ->   WHERE BookName LIKE 'A%';
+Empty set (0.00 sec)
+
+mysql> SELECT BookID, BookName,
+    ->        Price
+    ->   FROM Book
+    ->   WHERE BookName LIKE 'M%'
+    -> ;
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT BookID, BookName,
+    ->        Price
+    ->   FROM Book
+    ->   WHERE BookName LIKE '%for%';
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> DROP TABLE BookTran;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE BookTran
+    -> (
+    ->   TrnID int AUTO_INCREMENT
+    ->     primary key,
+    ->   TrnDate datetime,
+    ->   BookID int,
+    ->   MemberID int,
+    ->
+    ->   CONSTRAINT BookTran_BookID_FK
+    ->    FOREIGN KEY(BookID)
+    ->    REFERENCES Book(BookID),
+    ->
+    ->   CONSTRAINT BookTran_MemberID_FK
+    ->    FOREIGN KEY(MemberID)
+    ->    REFERENCES Member(MemberID)
+    -> );
+ERROR 1005 (HY000): Can't create table 'store.booktran' (errno: 150)
+mysql> CREATE TABLE BookTran
+    -> (
+    ->   TrnID int AUTO_INCREMENT
+    ->     primary key,
+    ->   TrnDate datetime,
+    ->   BookID int REFERENCES
+    ->   Book(BookID),
+    ->   MemberID int REFERENCES
+    ->   Member(MemberID)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> SELECT *
+    ->  FROM BookTran;
+Empty set (0.00 sec)
+
+mysql>
+mysql>
+mysql> INSERT INTO BookTran
+    -> (TrnDate, BookID, MemberID)
+    -> VALUES
+    -> (NOW(), 4, 1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> INSERT INTO BookTran
+    -> (TrnDate, BookID, MemberID)
+    -> VALUES
+    -> (NOW(), 5, 10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> SELECT *
+    ->  FROM BookTran;
++-------+---------------------+--------+----------+
+| TrnID | TrnDate             | BookID | MemberID |
++-------+---------------------+--------+----------+
+|     1 | 2019-08-27 21:15:28 |      4 |        1 |
+|     2 | 2019-08-27 21:15:28 |      5 |       10 |
++-------+---------------------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT BookName
+    ->    FROM Book
+    ->    WHERE BookName LIKE 'C_______';
+Empty set (0.00 sec)
+
+mysql> SELECT BookName
+    ->    FROM Book
+    ->    WHERE BookName LIKE 'H_______';
+Empty set (0.00 sec)
+
+mysql> SELECT BookName
+    ->    FROM Book
+    ->    WHERE BookName LIKE '_____';
+Empty set (0.00 sec)
+
+mysql> SELECT BookName
+    ->    FROM Book
+    ->    WHERE BookName LIKE 'B????';
+Empty set (0.00 sec)
+
+
+
+
+mysql> SELECT Length(BookName), BookName
+    ->    FROM Book
+    ->    WHERE Length(BookName) =17;
++------------------+-------------------+
+| Length(BookName) | BookName          |
++------------------+-------------------+
+|               17 | MYSQL for dummies |
++------------------+-------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+    ->   FROM Emp main
+    ->   WHERE Salary > (SELECT AVG(Salary)
+    ->              FROM Emp
+    ->              WHERE DeptID = main.DeptID
+    ->           );
++---------------+--------+----------+
+| EmpName       | DeptID | Salary   |
++---------------+--------+----------+
+| Steven King   |    105 | 50000.00 |
+| Neena Kochhar |    105 | 40000.00 |
+| Andy Hillman  |    105 | 30000.00 |
++---------------+--------+----------+
+3 rows in set (0.02 sec)
+
+mysql>
+mysql> SELECT *
+    ->   FROM Emp;
++-------+--------+-----------+--------+-------+----------+
+| EmpID | FName  | LName     | DeptID | MgrID | Salary   |
++-------+--------+-----------+--------+-------+----------+
+|  1001 | Steven | King      |    105 |  NULL | 50000.00 |
+|  1002 | Neena  | Kochhar   |    105 |  1003 | 40000.00 |
+|  1003 | Nancy  | Greenberg |    102 |  1001 | 35000.00 |
+|  1004 | Andrew | Lusk      |    101 |  1002 | 15000.00 |
+|  1005 | Pamela | Davis     |   NULL |  1002 | 14000.00 |
+|  1006 | Andy   | Hillman   |    105 |  1001 | 30000.00 |
+|  1007 | Rene   | Lopez     |    105 |  1001 | 18000.00 |
+|  1008 | Tanya  | Rff       |    105 |  1001 | 10000.00 |
+|  1009 | Sue    | Fisher    |    105 |  1001 | 11000.00 |
++-------+--------+-----------+--------+-------+----------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT AVG(Salary)
+    ->              FROM Emp
+    -> ;
++--------------+
+| AVG(Salary)  |
++--------------+
+| 24777.777778 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select FName,Salary from Emp where Salary=(select DISTINCT Salary from Em
+    -> p ORDER BY  Salary DESC  LIMIT 3,1);
+ERROR 1146 (42S02): Table 'joins.em' doesn't exist
+mysql> SELECT FName,Salary
+    -> from Emp
+    ->  where Salary=(
+    ->             SELECT DISTINCT Salary
+    ->                    from Emp
+    ->                   ORDER BY  Salary DESC
+    ->               LIMIT 3,1);
++-------+----------+
+| FName | Salary   |
++-------+----------+
+| Andy  | 30000.00 |
++-------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT CONCAT(FName, ' ', LName) AS EmpName
+    ->   FROM Emp
+    ->   WHERE MgrID = (SELECT MgrID
+    ->             FROM Emp
+    ->             WHERE FName = 'Andy'
+    ->                      AND LName = 'Hillman'
+    ->                 );
++-----------------+
+| EmpName         |
++-----------------+
+| Nancy Greenberg |
+| Andy Hillman    |
+| Rene Lopez      |
+| Tanya Rff       |
+| Sue Fisher      |
++-----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(FName, ' ', LName) AS EmpName
+    ->   FROM Emp
+    ->   WHERE MgrID = (SELECT MgrID
+    ->             FROM Emp
+    ->             WHERE FName = 'Andy'
+    ->                      AND LName = 'Hillman'
+    ->                 )
+    ->  AND NOT (FName = 'Andy'
+    ->   AND LName = 'Hillman');
++-----------------+
+| EmpName         |
++-----------------+
+| Nancy Greenberg |
+| Rene Lopez      |
+| Tanya Rff       |
+| Sue Fisher      |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT MgrID
+    ->             FROM Emp
+    ->             WHERE FName = 'Andy'
+    ->                      AND LName = 'Hillman';
++-------+
+| MgrID |
++-------+
+|  1001 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> USE store;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_store |
++-----------------+
+| book            |
+| booktran        |
+| member          |
++-----------------+
+3 rows in set (0.13 sec)
+
+
+mysql> SELECT *
+    -> FROM INFORMATION_SCHEMA.Table_Constraints
+    -> WHERE Table_Name='booktran';
++--------------------+-------------------+-----------------+--------------+------------+-----------------+
+| CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME | TABLE_SCHEMA | TABLE_NAME | CONSTRAINT_TYPE |
++--------------------+-------------------+-----------------+--------------+------------+-----------------+
+| NULL               | store             | PRIMARY         | store        | booktran   | PRIMARY KEY     |
++--------------------+-------------------+-----------------+--------------+------------+-----------------+
+1 row in set (0.14 sec)
+
+mysql> SELECT*
+    -> FROM booktran;
++-------+---------------------+--------+----------+
+| TrnID | TrnDate             | BookID | MemberID |
++-------+---------------------+--------+----------+
+|     1 | 2019-08-27 21:15:28 |      4 |        1 |
+|     2 | 2019-08-27 21:15:28 |      5 |       10 |
++-------+---------------------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE booktran;
++----------+----------+------+-----+---------+----------------+
+| Field    | Type     | Null | Key | Default | Extra          |
++----------+----------+------+-----+---------+----------------+
+| TrnID    | int(11)  | NO   | PRI | NULL    | auto_increment |
+| TrnDate  | datetime | YES  |     | NULL    |                |
+| BookID   | int(11)  | YES  |     | NULL    |                |
+| MemberID | int(11)  | YES  |     | NULL    |                |
++----------+----------+------+-----+---------+----------------+
+4 rows in set (0.02 sec)
+
+mysql> SELECT*
+    -> FROM book;
++--------+----------------------+---------+
+| BookID | BookName             | Price   |
++--------+----------------------+---------+
+|      1 | HTML5 Step by Step   |    NULL |
+|      2 | Java Unleashed       | -560.00 |
+|      3 | MYSQL for dummies    |  350.00 |
+|      4 | MYSQL for developers |  560.00 |
++--------+----------------------+---------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT*
+    -> FROM book
+    -> WHERE Price*.10>30 AND
+    -> BookName LIKE'M%';
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT*
+    -> FROM book
+    -> WHERE Price*.10>30 AND
+    -> (BookName NOT LIKE'M%');
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price=NULL;
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price IS NULL;
++--------+--------------------+-------+
+| BookID | BookName           | Price |
++--------+--------------------+-------+
+|      1 | HTML5 Step by Step |  NULL |
++--------+--------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price IS NOT NULL;
++--------+----------------------+---------+
+| BookID | BookName             | Price   |
++--------+----------------------+---------+
+|      2 | Java Unleashed       | -560.00 |
+|      3 | MYSQL for dummies    |  350.00 |
+|      4 | MYSQL for developers |  560.00 |
++--------+----------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price IN(350,560,NULL);
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set (0.02 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price NOT IN(350,560,NULL);
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price NOT IN(350,560,'NULL');
++--------+----------------+---------+
+| BookID | BookName       | Price   |
++--------+----------------+---------+
+|      2 | Java Unleashed | -560.00 |
++--------+----------------+---------+
+1 row in set, 1 warning (0.02 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price IN(350,560,'NULL');
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set, 1 warning (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price BETWEEN 400 AND 600;
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price BETWEEN NULL AND 600;
+Empty set (0.00 sec)
+
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price BETWEEN 'NULL' AND 600;
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set, 3 warnings (0.00 sec)
+
+
+
+
+mysql> SELECT*
+    -> FROM book
+    -> WHERE Price*.10>30 AND
+    -> (BookName NOT LIKE'M%');
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price=NULL;
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price IS NULL;
++--------+--------------------+-------+
+| BookID | BookName           | Price |
++--------+--------------------+-------+
+|      1 | HTML5 Step by Step |  NULL |
++--------+--------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price IS NOT NULL;
++--------+----------------------+---------+
+| BookID | BookName             | Price   |
++--------+----------------------+---------+
+|      2 | Java Unleashed       | -560.00 |
+|      3 | MYSQL for dummies    |  350.00 |
+|      4 | MYSQL for developers |  560.00 |
++--------+----------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price IN(350,560,NULL);
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set (0.02 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price NOT IN(350,560,NULL);
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price NOT IN(350,560,'NULL');
++--------+----------------+---------+
+| BookID | BookName       | Price   |
++--------+----------------+---------+
+|      2 | Java Unleashed | -560.00 |
++--------+----------------+---------+
+1 row in set, 1 warning (0.02 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price IN(350,560,'NULL');
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set, 1 warning (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price BETWEEN 400 AND 600;
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price BETWEEN NULL AND 600;
+Empty set (0.00 sec)
+
+
+mysql> SELECT *
+    -> FROM book
+    -> WHERE Price BETWEEN 'NULL' AND 600;
++--------+----------------------+--------+
+| BookID | BookName             | Price  |
++--------+----------------------+--------+
+|      3 | MYSQL for dummies    | 350.00 |
+|      4 | MYSQL for developers | 560.00 |
++--------+----------------------+--------+
+2 rows in set, 3 warnings (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> SELECT *
+    -> FROM book;
++--------+----------------------+---------+
+| BookID | BookName             | Price   |
++--------+----------------------+---------+
+|      1 | HTML5 Step by Step   |    NULL |
+|      2 | Java Unleashed       | -560.00 |
+|      3 | MYSQL for dummies    |  350.00 |
+|      4 | MYSQL for developers |  560.00 |
++--------+----------------------+---------+
+4 rows in set (0.00 sec)
+
+
+mysql> SELECT BookID,Bookname
+    ->  FROM book
+    -> WHERE BookID=2
+    -> OR BookID=4;
++--------+----------------------+
+| BookID | Bookname             |
++--------+----------------------+
+|      2 | Java Unleashed       |
+|      4 | MYSQL for developers |
++--------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT BookID,BookName
+    ->  FROM book
+    -> WHERE BookID=2
+    -> AND BookID=4;
+Empty set (0.00 sec)
+
+mysql>
+mysql>
+mysql> SELECT BookID,BookName
+    ->  FROM book
+    -> WHERE BookID IN(2,4);
++--------+----------------------+
+| BookID | BookName             |
++--------+----------------------+
+|      2 | Java Unleashed       |
+|      4 | MYSQL for developers |
++--------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT BookID,BookName
+    ->  FROM book
+    -> WHERE BookID NOT IN(2,4);
++--------+--------------------+
+| BookID | BookName           |
++--------+--------------------+
+|      1 | HTML5 Step by Step |
+|      3 | MYSQL for dummies  |
++--------+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Book(BookID,BookName)
+    -> VALUES(5,NULL),(6,NULL);
+ERROR 1048 (23000): Column 'BookName' cannot be null
+mysql> DESCRIBE Book;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| BookID   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| BookName | varchar(50)  | NO   |     | NULL    |                |
+| Price    | decimal(6,2) | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql>
+
