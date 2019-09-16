@@ -1,0 +1,64 @@
+
+ /*(8)Define a class "base1" with only parameterized constructor.
+Derive a class "sub1" from "base1". This class should have following constructors
+	a) Default
+	b) one parameter
+	c) two parameter
+Now try to instantiate "sub1" , using any of the above mentioned constructors.
+*/
+
+
+package inheritance;
+
+class Base1
+{
+	Base1(int a)
+	{
+		System.out.println("parametarized cons");
+	}
+}
+
+
+class Sub1 extends Base1
+{
+	public Sub1() 
+	{
+		super(5);
+		System.out.println("Default cons");
+	}
+	
+	Sub1(int a)
+	{
+		super(5);
+		System.out.println("one parametarized cons");
+	}
+	
+	Sub1(int a,int b)
+	{
+		super(5);
+		System.out.println(" two parametarized cons");
+	}
+}
+
+public class Demo8 {
+
+	public static void main(String[] args) 
+	{
+		
+		Sub1 s=new Sub1();
+		Sub1 s1=new Sub1(1);
+		Sub1 s2=new Sub1(2,3);
+	}
+
+}
+
+/*
+OUTPUT:
+
+parametarized cons
+Default cons
+parametarized cons
+one parametarized cons
+parametarized cons
+ two parametarized cons
+*/

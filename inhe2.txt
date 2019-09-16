@@ -1,0 +1,43 @@
+
+
+/*(2)create a class "Vehicle", define a method "public void start()" in it. From this class derive a class FourWheeler. How will u override "start()" method of parent class ?
+*/
+package inheritance;
+
+
+class Vehicle
+{
+	public void start()
+	{
+		System.out.println("start vehicle with switch");
+	}
+	public void stop()
+	{
+		System.out.println("stop ");
+	}
+}
+class Fourwheeler extends Vehicle
+{
+	public void start()
+	{
+		System.out.println("start vehicle with key");
+	}
+}
+
+public class Demo2 {
+	
+		public static void main(String args[])
+		{
+			 Fourwheeler f=new Fourwheeler();
+			 f.start();
+			 f.stop();
+	}
+
+}
+
+/*
+OUTPUT:
+
+start vehicle with key
+stop 
+*/

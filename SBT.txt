@@ -1,0 +1,261 @@
+CREATE TABLE Salespeople
+(
+SNUM int,
+SNAME varchar(20),
+CITY varchar(20),
+COMM decimal(2,2)
+);
+
+INSERT INTO Salespeople(
+SNUM,SNAME,CITY,COMM)
+VALUES
+(1001,'Peel','London',.12),
+(1002,'Serres','San Jose',.13),
+(1004,'Motika','London',.11),
+(1007,'Rifkin','Barcelona',.15),
+(1003,'AxelRod','New York',.10),
+(1005,'Fran','London',.26);
+
+
+
+
+
+CREATE TABLE Customers
+(
+CNUM int,
+CNAME varchar(20),
+CITY varchar(20),
+RATING double,
+SNUM double
+);
+
+
+INSERT INTO Customers(
+CNUM,CNAME,CITY,RATING,SNUM)
+VALUES
+(2001,'Hoffman','London',100,1001),
+(2002,'Giovanni','Rome',200,1003),
+(2003,'Liu','San Jose',200,1002),
+(2004,'Grass','Berlin',300,1002),
+(2006,'Clemens','London',100,1001),
+(2008,'Cisneros','San Jose',300,1007),
+(2007,'Pereira','Rome',100,1004);
+
+
+
+CREATE TABLE Orders
+(
+ONUM int,
+AMT decimal(8,2),
+ODATE date,
+CNUM Double,
+SNUM Double
+);
+
+
+INSERT INTO Orders(
+ONUM,AMT,ODATE,CNUM,SNUM)
+VALUES
+(3001,18.69,'1996/03/10',2008,1007),
+(3003,767.19,'1996/03/10',2001,1001),
+(3002,1900.10,'1996/03/10',2007,1004),
+(3005,5160.45,'1996/03/10',2003,1002),
+(3006,1098.16,'1996/03/10',2008,1007),
+(3009,1713.23,'1996/04/10',2002,1003),
+(3007,75.75,'1996/04/10',2002,1003),
+(3008,4723.00,'1996/05/10',2006,1001),
+(3010,1309.95,'1996/06/10',2004,1002),
+(3011,9891.88,'1996/06/10',2006,1001);
+
+
+INSERT INTO Orders(
+ONUM,AMT,ODATE,CNUM,SNUM)
+VALUES
+(3001,18.69,'10-03-1996',2008,1007);
+
+
+
+
+Drop Table Orders;
+Drop Table Customers;
+
+
+SELECT * 
+FROM Orders;
+
+
+
+SELECT * 
+FROM Customers;
+
+
+SELECT * 
+FROM Salespeople;
+
+
+*************************************************
+1.
+
+SELECT *
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE Table_Name='Salespeople';
+
+*************************************************
+2.
+
+SELECT CNAME,RATING
+FROM Customers
+WHERE RATING=100;
+
+****************************************************************************
+3.
+
+SELECT *
+FROM Customers
+WHERE CITY IS NULL;
+
+*****************************************************************************
+4.
+
+SELECT s.SNUM,s.SNAME,o.ODATE, MAX(o.AMT) AS MAMT
+FROM Salespeople s INNER JOIN Orders o
+ON o.SNUM=s.SNUM
+GROUP BY o.ODATE,o.SNUM;
+
+****************************************************************************
+5.
+
+SELECT *
+ FROM Orders 
+ORDER BY CNUM DESC;
+
+****************************************************************************
+6.
+
+SELECT s.SNAME,o.ONUM,o.ODATE
+FROM Salespeople s INNER JOIN Orders o
+ON s.SNUM=o.SNUM
+ORDER BY ONUM DESC
+LIMIT 0,1;
+
+****************************************************************************
+7.
+
+SELECT c.CNAME,s.SNAME
+FROM Salespeople s INNER JOIN Customers c
+ON s.SNUM=c.SNUM;
+
+*****************************************************************************
+8.
+
+SELECT s.SNUM,s.SNAME
+FROM Salespeople s
+WHERE 1< (SELECT COUNT(*)
+FROM Customers c
+  WHERE s.SNUM=c.SNUM );
+
+*******************************************************************************
+9.
+
+SELECT COUNT(o.ONUM)AS TotalCount, s.SNAME
+FROM Orders o  INNER JOIN Salespeople s
+WHERE o.SNUM=s.SNUM
+GROUP BY s.SNUM
+ORDER BY COUNT(o.ONUM) DESC;
+
+************************************************************************************
+
+10.
+
+SELECT *
+FROM  Customers
+WHERE  (SELECT COUNT(*)
+	FROM Customers
+	WHERE CITY='San Jose')>1;
+	
+******************************************************************************************
+11.
+
+SELECT s.SNAME,c.CNAME,c.CITY
+FROM Salespeople s INNER  JOIN Customers c
+ON s.SNUM=c.SNUM;
+
+*******************************************************************************************
+
+12.
+
+SELECT s.SNAME,s.SNUM,o.ONUM,o.AMT
+FROM Salespeople s ,Orders o,Customers c
+WHERE s.SNUM=c.SNUM and c.CNUM=o.CNUM
+GROUP BY SNAME;
+******************************************************************************************
+13.
+
+SELECT CNAME
+FROM Customers
+WHERE CITY ='San Jose' AND RATING >200;
+
+*****************************************************************************************
+14.
+
+SELECT SNAME ,COMM
+FROM Salespeople 
+WHERE CITY='London';
+
+****************************************************************************************
+15.
+
+SELECT s.SNAME,o.ONUM
+FROM Salespeople s INNER JOIN Orders o
+ON s.SNUM=o.SNUM
+ WHERE SNAME='Motika';
+
+*******************************************************************************************
+16.
+
+SELECT c.CNAME,o.ONUM,o.ODATE
+FROM Customers c INNER JOIN Orders o
+ON c.SNUM=o.SNUM
+ WHERE o.ODATE='1996-03-10';
+
+*****************************************************************************************
+
+
+18.
+
+SELECT ONUM ,ODATE
+FROM Orders
+WHERE AMT> (SELECT MIN(AMT)
+                        FROM Orders 
+                        WHERE ODATE='1996-06-10');
+
+*****************************************************************************************
+19.
+
+SELECT s.SNAME,s.SNUM,c.RATING
+FROM Salespeople s  INNER JOIN Customers c
+ON s.SNUM=c.SNUM
+WHERE exists(
+                         select c.RATING 
+	         from Customers
+                         where c.RATING=300
+	);
+
+
+
+
+****************************************************************************************
+20.
+SELECT c1.CNAME,c2.CNAME,c1.RATING
+FROM Customers c1 
+inner join 
+Customers c2 on c1.RATING=c2.RATING
+WHERE c1.CNAME !=C2.CNAME;
+
+***************************************************************************************
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+
+
+/*(3) Go for Hierarchical inheritance, create instances of child class and observe constructor invocation.
+*/
+package inheritance;
+
+class Person1
+{
+	Person1()
+	{
+		System.out.println("cons person");
+	}
+	Person1(int i)
+	{
+		System.out.println("para cons person");
+	}
+}
+class Teacher extends Person1
+{
+	
+	Teacher()
+	{
+		super(1);
+		System.out.println("cons Teacher");
+	}
+
+	Teacher(int i) {
+	System.out.println("para cons teacher");
+	}
+}
+class Halwai extends Person1
+{
+	Halwai()
+	{
+		super(2);
+		System.out.println("cons Halwai");
+	}
+}
+
+public class Demo3 {
+	
+	public static void main(String args[])
+	{
+		//Teacher t1=new Teacher(1);
+		Teacher t=new Teacher();
+		Halwai h=new Halwai();
+	}
+
+}
+
+/*
+OUTPUT:
+para cons person
+cons Teacher
+para cons person
+cons Halwai
+*/

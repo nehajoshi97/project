@@ -1,0 +1,83 @@
+
+/*(7)Define class "Parent1" with some data.
+Define interface "Parent2" with some data.
+Derive a class "Child" from "Parent1" and "Parent2", instantiate it and call the members.
+*/
+
+package inheritance;
+
+
+class Parent1
+{
+   public void Mom()
+   {
+	   System.out.println("Mummy");
+   }
+   public void Dad()
+   {
+	   System.out.println("Daddy");
+   }
+   
+}
+
+interface Parent2
+{
+	public void Uncle();
+	public void Aunty();
+   
+}
+
+class Child extends Parent1 implements Parent2
+{
+       	
+	public void Mom()
+	   {
+		   super.Mom();		
+		   System.out.println("parent1");
+	   }
+	   public void Dad()
+	   {
+		   super.Dad();	
+		   System.out.println("parent1");
+	   }
+	
+	
+	
+public void Uncle() 
+{
+	System.out.println("parent2");
+	
+}
+
+
+public void Aunty() 
+{
+	
+	System.out.println("parent2");
+}
+}
+
+public class Demo7 {
+
+	public static void main(String[] args) {
+		
+			Child c=new Child();
+			c.Aunty();
+			c.Uncle();
+			c.Mom();
+			c.Dad();
+	}
+
+}
+
+/*
+OUTPUT:
+
+parent2
+parent2
+Mummy
+parent1
+Daddy
+parent1
+
+*/

@@ -1,0 +1,102 @@
+/*(1)Create a multi-level inheritance , instantiate the child class and observe constructor invocation.Also show, if needed how will u invoke parent class constructor from child class ?
+*/
+
+package inheritance;
+
+class Person
+{
+	/*Person()
+	{
+  	System.out.println("person constructor");
+	}*/
+	
+	Person(int a )
+	{
+  	System.out.println("person parametrized constructor");
+	}
+
+	
+void Nationality()
+{
+  System.out.println("Indian");
+}
+
+void place()
+{
+	System.out.println("Mumbai");
+}
+	
+}
+class Emp extends Person
+{
+  Emp()
+  {
+	  super(5);
+	  System.out.println("Employee");
+  }
+  void place()
+  {
+	  
+  	System.out.println("pune");
+  }
+  	
+  void organization()
+  
+  {
+   
+  System.out.println("IBM");
+   
+  }
+  
+}
+
+class Manager extends Emp
+{
+  Manager()
+  {
+	  System.out.println("manager");
+  }
+  void place()
+  {
+
+  	System.out.println("newyork");
+  }
+  	
+  void subordinates()
+  
+  {
+  
+  System.out.println(12);
+   
+  }
+   
+}
+
+
+public class Demo {
+
+	public static void main(String[] args) {
+	
+		Manager m=new Manager();
+		 
+		m.organization();
+		 
+		m.subordinates();
+		 
+		m.place();
+		 
+
+	}
+
+}
+
+
+OUTPUT:
+/*
+person parametrized constructor
+Employee
+manager
+IBM
+12
+newyork
+*/
