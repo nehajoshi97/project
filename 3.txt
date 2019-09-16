@@ -1,0 +1,300 @@
+mysql> USE college;
+Database changed
+mysql> SELECT *
+    ->  FROM stud_info;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       1 | PAYAL     |       22 |
+|       2 | NEHA      |       22 |
++---------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO stud_info VALUES (
+    -> 3,
+    -> 'RUPALI',
+    -> '25'
+    -> );
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO stud_info VALUES (
+    -> 4,
+    -> 'GAYATRI',
+    -> '25'
+    -> );
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT*
+    ->  FROM stud_info;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       1 | PAYAL     |       22 |
+|       2 | NEHA      |       22 |
+|       3 | RUPALI    |       25 |
+|       4 | GAYATRI   |       25 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->  FROM stud_info
+    ->  ORDER BY stud_name ASC;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       4 | GAYATRI   |       25 |
+|       2 | NEHA      |       22 |
+|       1 | PAYAL     |       22 |
+|       3 | RUPALI    |       25 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->  FROM stud_info
+    ->  ORDER BY stud_name ;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       4 | GAYATRI   |       25 |
+|       2 | NEHA      |       22 |
+|       1 | PAYAL     |       22 |
+|       3 | RUPALI    |       25 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->  FROM stud_info
+    ->  ORDER BY stud_name DESC;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       3 | RUPALI    |       25 |
+|       1 | PAYAL     |       22 |
+|       2 | NEHA      |       22 |
+|       4 | GAYATRI   |       25 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->  FROM stud_info
+    ->  ORDER BY stud_id DESC;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       4 | GAYATRI   |       25 |
+|       3 | RUPALI    |       25 |
+|       2 | NEHA      |       22 |
+|       1 | PAYAL     |       22 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT stud_id AS ID,
+    -> stud_name
+    -> FROM stud_info
+    -> ORDER BY stud_id DESC;
++----+-----------+
+| ID | stud_name |
++----+-----------+
+|  4 | GAYATRI   |
+|  3 | RUPALI    |
+|  2 | NEHA      |
+|  1 | PAYAL     |
++----+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ID AS stud_id,
+    -> stud_name
+    -> FROM stud_info
+    -> ORDER BY ID DESC;
+ERROR 1054 (42S22): Unknown column 'ID' in 'field list'
+mysql> SELECT *
+    ->  FROM stud_info;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       1 | PAYAL     |       22 |
+|       2 | NEHA      |       22 |
+|       3 | RUPALI    |       25 |
+|       4 | GAYATRI   |       25 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->  FROM stud_info
+    ->  ORDER BY stud_id DESC,
+    ->  stud_name ASC;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       4 | GAYATRI   |       25 |
+|       3 | RUPALI    |       25 |
+|       2 | NEHA      |       22 |
+|       1 | PAYAL     |       22 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->  FROM stud_info
+    ->  ORDER BY stud_id DESC,
+    ->  stud_name DESC;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       4 | GAYATRI   |       25 |
+|       3 | RUPALI    |       25 |
+|       2 | NEHA      |       22 |
+|       1 | PAYAL     |       22 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT stud_id,
+    -> stud_name,
+    -> stud_id
+    -> FROM stud_info
+    -> ORDER BY 2;
++---------+-----------+---------+
+| stud_id | stud_name | stud_id |
++---------+-----------+---------+
+|       4 | GAYATRI   |       4 |
+|       2 | NEHA      |       2 |
+|       1 | PAYAL     |       1 |
+|       3 | RUPALI    |       3 |
++---------+-----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT stud_age,
+    -> stud_name,
+    -> stud_id
+    -> FROM stud_info
+    -> stud_id;
++----------+-----------+---------+
+| stud_age | stud_name | stud_id |
++----------+-----------+---------+
+|       22 | PAYAL     |       1 |
+|       22 | NEHA      |       2 |
+|       25 | RUPALI    |       3 |
+|       25 | GAYATRI   |       4 |
++----------+-----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT stud_age,
+    -> stud_name,
+    -> stud_id
+    -> FROM stud_age
+    -> ORDER BY 2;
+ERROR 1146 (42S02): Table 'college.stud_age' doesn't exist
+mysql> SELECT stud_id,
+    -> stud_name,
+    -> stud_id
+    -> FROM stud_info
+    -> ORDER BY 2;
++---------+-----------+---------+
+| stud_id | stud_name | stud_id |
++---------+-----------+---------+
+|       4 | GAYATRI   |       4 |
+|       2 | NEHA      |       2 |
+|       1 | PAYAL     |       1 |
+|       3 | RUPALI    |       3 |
++---------+-----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT stud_age,
+    -> stud_name,
+    -> stud_id
+    -> FROM stud_info
+    -> ORDER BY 2;
++----------+-----------+---------+
+| stud_age | stud_name | stud_id |
++----------+-----------+---------+
+|       25 | GAYATRI   |       4 |
+|       22 | NEHA      |       2 |
+|       22 | PAYAL     |       1 |
+|       25 | RUPALI    |       3 |
++----------+-----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT stud_age,
+    -> stud_id
+    -> ;
+ERROR 1054 (42S22): Unknown column 'stud_age' in 'field list'
+mysql> SELECT stud_age,
+    -> stud_id,
+    -> stud_name
+    -> FROM stud_info
+    -> ORDER BY 2;
++----------+---------+-----------+
+| stud_age | stud_id | stud_name |
++----------+---------+-----------+
+|       22 |       1 | PAYAL     |
+|       22 |       2 | NEHA      |
+|       25 |       3 | RUPALI    |
+|       25 |       4 | GAYATRI   |
++----------+---------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT stud_id,
+    -> stud_name,
+    -> stud_age
+    -> SELECT stud_info
+    -> ORDER BY 2
+    -> LIMIT 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT stud_info
+ORDER BY 2
+LIMIT 10' at line 4
+mysql> SELECT stud_info
+    -> stud_name,
+    -> stud_age
+    -> FROM  stud_info
+    -> ORDER BY 2
+    -> LIMIT 10;
+ERROR 1054 (42S22): Unknown column 'stud_info' in 'field list'
+mysql> SELECT stud_id
+    -> stud_age;
+ERROR 1054 (42S22): Unknown column 'stud_id' in 'field list'
+mysql> SELECT stud_id,
+    -> stud_name,
+    -> stud_age
+    -> FROM  stud_info
+    -> ORDER BY 2
+    -> LIMIT 10;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       4 | GAYATRI   |       25 |
+|       2 | NEHA      |       22 |
+|       1 | PAYAL     |       22 |
+|       3 | RUPALI    |       25 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT stud_id,
+    -> stud_name,
+    -> stud_age
+    -> FROM  stud_info
+    -> ORDER BY 2
+    -> LIMIT 3;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       4 | GAYATRI   |       25 |
+|       2 | NEHA      |       22 |
+|       1 | PAYAL     |       22 |
++---------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT stud_id,
+    -> stud_name,
+    -> stud_age
+    -> FROM  stud_info
+    -> ORDER BY 2
+    -> LIMIT 1,3;
++---------+-----------+----------+
+| stud_id | stud_name | stud_age |
++---------+-----------+----------+
+|       2 | NEHA      |       22 |
+|       1 | PAYAL     |       22 |
+|       3 | RUPALI    |       25 |
++---------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql>
